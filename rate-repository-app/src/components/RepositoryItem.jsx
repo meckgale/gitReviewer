@@ -1,6 +1,6 @@
-import { Image, StyleSheet, View } from "react-native";
-import Text from "./Text";
-import theme from "../theme";
+import { Image, StyleSheet, View } from 'react-native'
+import Text from './Text'
+import theme from '../theme'
 
 const styles = StyleSheet.create({
   container: {
@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   topRow: {
-    flexDirection: "row",
+    flexDirection: 'row',
     gap: 15,
   },
   avatar: {
@@ -19,32 +19,32 @@ const styles = StyleSheet.create({
     gap: 5,
   },
   language: {
-    alignSelf: "flex-start",
+    alignSelf: 'flex-start',
     backgroundColor: theme.colors.primary,
     padding: 5,
     borderRadius: 3,
   },
   bottomRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   rowItem: {
-    alignItems: "center",
+    alignItems: 'center',
     gap: 5,
   },
-});
+})
 
 const formatCount = (value) =>
   value < 1000
     ? String(value)
-    : `${(value / 1000).toFixed(1).replace(/\.0$/, "")}k`;
+    : `${(value / 1000).toFixed(1).replace(/\.0$/, '')}k`
 
 const RowItem = ({ value, label }) => (
   <View style={styles.rowItem}>
     <Text fontWeight="bold">{formatCount(value)}</Text>
     <Text color="textSecondary">{label}</Text>
   </View>
-);
+)
 
 const RepositoryItem = ({ item }) => {
   return (
@@ -67,7 +67,7 @@ const RepositoryItem = ({ item }) => {
         <RowItem value={item.ratingAverage} label="Rating" />
       </View>
     </View>
-  );
-};
+  )
+}
 
-export default RepositoryItem;
+export default RepositoryItem
