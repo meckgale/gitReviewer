@@ -1,6 +1,8 @@
 import { View, StyleSheet } from 'react-native'
+import { useNavigate } from 'react-router-native'
 import theme from '../theme'
 import SignInForm from './SignInForm'
+import useSignIn from '../hooks/useSignIn'
 
 const styles = StyleSheet.create({
   container: {
@@ -11,9 +13,24 @@ const styles = StyleSheet.create({
 })
 
 const SignIn = () => {
-  const onSubmit = (values) => {
-    console.log(values)
+  const [signIn] = useSignIn()
+  const navigate = useNavigate()
+
+  const onSubmit = async ({ username, password }) => {
+    try {
+      const data = await signIn({ username, password })
+
+      if (data?.authenticate?.accessToken) {
+        navigate('/')
+      }
+
+      console.log('AUTHENTICATE mutation result:', data)
+      console.log('accessToken:', data?.authenticate?.accessToken)
+    } catch (e) {
+      console.log('Sign in error:', e)
+    }
   }
+
   return (
     <View style={styles.container}>
       <SignInForm onSubmit={onSubmit} />
