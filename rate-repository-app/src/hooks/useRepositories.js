@@ -9,7 +9,7 @@ import { GET_REPOSITORIES } from '../graphql/queries'
 //     setLoading(true)
 
 //     // Replace the IP address part with your own IP address!
-//     const response = await fetch('http://192.168.1.50:5000/api/repositories')
+//     const response = await fetch('<OWNIP>')
 //     const json = await response.json()
 
 //     setLoading(false)
@@ -23,14 +23,46 @@ import { GET_REPOSITORIES } from '../graphql/queries'
 //   return { repositories, loading, refetch: fetchRepositories }
 // }
 
-const useRepositories = () => {
-  const { data, loading, refetch, error } = useQuery(GET_REPOSITORIES, {
-    fetchPolicy: 'cache-and-network',
-  })
+const useRepositories = ({
+  first = 8,
+  orderBy,
+  orderDirection,
+  searchKeyword = '',
+} = {}) => {
+  const { data, loading, fetchMore, refetch, error, ...result } = useQuery(
+    GET_REPOSITORIES,
+    {
+      variables: { first, orderBy, orderDirection, searchKeyword },
+      fetchPolicy: 'cache-and-network',
+    },
+  )
 
-  const repositories = data?.repositories?.edges?.map((edge) => edge.node) ?? []
+  const handleFetchMore = () => {
+    const canFetchMore = !loading && data?.repositories?.pageInfo?.hasNextPage
 
-  return { repositories, loading, refetch, error }
+    if (!canFetchMore) return
+
+    fetchMore({
+      variables: {
+        first,
+        orderBy,
+        orderDirection,
+        searchKeyword,
+        after: data.repositories.pageInfo.endCursor,
+      },
+    })
+  }
+
+  const repositories = data?.repositories ?? null
+
+  return {
+    repositories,
+    fetchMore: handleFetchMore,
+    loading,
+    refetch,
+    error,
+    ...result,
+  }
 }
 
 export default useRepositories

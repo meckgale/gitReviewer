@@ -1,7 +1,7 @@
 import * as yup from 'yup'
 import { Text, StyleSheet, TextInput, Pressable, View } from 'react-native'
 import { useFormik } from 'formik'
-import theme from '../theme'
+import theme from '../../theme'
 
 const initialValues = {
   username: '',
@@ -54,7 +54,7 @@ const validationSchema = yup.object().shape({
     .required('Username is required'),
   password: yup
     .string()
-    .min(8, 'Password must be longer than 8 chracters')
+    .min(5, 'Password must be longer than 5 chracters')
     .required('Password is required'),
 })
 
@@ -73,6 +73,7 @@ const SignInForm = ({ onSubmit }) => {
   return (
     <View>
       <TextInput
+        testID="usernameField"
         placeholder="Username"
         placeholderTextColor={theme.colors.placeholder}
         value={formik.values.username}
@@ -89,9 +90,11 @@ const SignInForm = ({ onSubmit }) => {
         <Text style={styles.errorText}>{formik.errors.username}</Text>
       )}
       <TextInput
+        testID="passwordField"
         placeholder="Password"
         placeholderTextColor={theme.colors.placeholder}
         value={formik.values.password}
+        onBlur={formik.handleBlur('password')}
         onChangeText={formik.handleChange('password')}
         secureTextEntry={true}
         style={[
@@ -103,7 +106,11 @@ const SignInForm = ({ onSubmit }) => {
       {passwordHasError && (
         <Text style={styles.errorText}>{formik.errors.password}</Text>
       )}
-      <Pressable onPress={formik.handleSubmit} style={styles.button}>
+      <Pressable
+        testID="submitButton"
+        onPress={formik.handleSubmit}
+        style={styles.button}
+      >
         <Text style={styles.buttonText}>Sign in</Text>
       </Pressable>
     </View>

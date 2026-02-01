@@ -1,4 +1,4 @@
-import { Image, StyleSheet, View } from 'react-native'
+import { Image, StyleSheet, View, Pressable } from 'react-native'
 import Text from './Text'
 import theme from '../theme'
 
@@ -32,6 +32,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 5,
   },
+  githubButton: {
+    marginTop: 8,
+    backgroundColor: theme.colors.primary,
+    borderRadius: theme.radius?.button ?? 6,
+    paddingVertical: 14,
+    alignItems: 'center',
+  },
+  githubButtonText: {
+    color: theme.colors.appBarText,
+    fontSize: theme.fontSizes.subheading,
+    fontWeight: theme.fontWeights.bold,
+  },
 })
 
 const formatCount = (value) =>
@@ -46,9 +58,9 @@ const RowItem = ({ value, label }) => (
   </View>
 )
 
-const RepositoryItem = ({ item }) => {
+const RepositoryItem = ({ item, showGithubButton = false, onOpenInGitHub }) => {
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="repositoryItem">
       <View style={styles.topRow}>
         <Image style={styles.avatar} source={{ uri: item.ownerAvatarUrl }} />
         <View style={styles.info}>
@@ -66,6 +78,11 @@ const RepositoryItem = ({ item }) => {
         <RowItem value={item.reviewCount} label="Reviews" />
         <RowItem value={item.ratingAverage} label="Rating" />
       </View>
+      {showGithubButton && (
+        <Pressable style={styles.githubButton} onPress={onOpenInGitHub}>
+          <Text style={styles.githubButtonText}>Open in GitHub</Text>
+        </Pressable>
+      )}
     </View>
   )
 }

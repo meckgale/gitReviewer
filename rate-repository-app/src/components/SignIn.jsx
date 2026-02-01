@@ -1,7 +1,7 @@
 import { View, StyleSheet } from 'react-native'
 import { useNavigate } from 'react-router-native'
 import theme from '../theme'
-import SignInForm from './SignInForm'
+import SignInForm from './SignInForm/index'
 import useSignIn from '../hooks/useSignIn'
 
 const styles = StyleSheet.create({

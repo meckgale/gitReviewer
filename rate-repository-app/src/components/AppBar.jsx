@@ -49,6 +49,20 @@ const AppBar = () => {
           </Text>
         </Link>
 
+        {isSignedIn && (
+          <Link to="/create-review" component={Pressable} style={styles.item}>
+            <Text color="appBarText" fontSize="subheading" fontWeight="bold">
+              Create a review
+            </Text>
+          </Link>
+        )}
+        {isSignedIn && (
+          <Link to="/myreviews" component={Pressable} style={styles.item}>
+            <Text color="appBarText" fontSize="subheading" fontWeight="bold">
+              My reviews
+            </Text>
+          </Link>
+        )}
         {isSignedIn ? (
           <Pressable onPress={handleSignOut} style={styles.item}>
             <Text color="appBarText" fontSize="subheading" fontWeight="bold">
@@ -59,6 +73,13 @@ const AppBar = () => {
           <Link to="/signin" component={Pressable} style={styles.item}>
             <Text color="appBarText" fontSize="subheading" fontWeight="bold">
               Sign in
+            </Text>
+          </Link>
+        )}
+        {!isSignedIn && (
+          <Link to="/signup" component={Pressable} style={styles.item}>
+            <Text color="appBarText" fontSize="subheading" fontWeight="bold">
+              Sign up
             </Text>
           </Link>
         )}

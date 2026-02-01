@@ -29,6 +29,7 @@ const theme = {
   },
   backgroundColor: {
     colorPrimary: '#24292e',
+    colorSecondary: '#e5e5e5',
   },
   radius: {
     input: 6,
