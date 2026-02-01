@@ -13,9 +13,9 @@ describe('SignIn', () => {
       const onSubmit = jest.fn()
       render(<SignInForm onSubmit={onSubmit} />)
 
-      fireEvent.changeText(screen.getByPlaceholderText('Username'), 'kalle')
-      fireEvent.changeText(screen.getByPlaceholderText('Password'), 'password')
-      fireEvent.press(screen.getByText('Sign in'))
+      fireEvent.changeText(screen.getByTestId('usernameField'), 'kalle')
+      fireEvent.changeText(screen.getByTestId('passwordField'), 'password')
+      fireEvent.press(screen.getByTestId('submitButton'))
 
       await waitFor(() => {
         // expect the onSubmit function to have been called once and with a correct first argument
